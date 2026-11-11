@@ -1,0 +1,88 @@
+ENTRENADOR DE ACORDES — AYUDA Y REGISTRO DE CAMBIOS
+====================================================
+
+LA IDEA
+-------
+Esta app cierra el triángulo tonalidad -> escala -> acorde. Primero
+automatizas la forma de cada acorde en el teclado; después, qué acorde
+vive en cada grado de una tonalidad; y al final, las progresiones.
+
+El truco: un acorde es una escala tocada «una sí, una no». Si ves la
+escala de Mi bemol mayor, el ii es Fa–La bemol–Do–Mi bemol: empieza en
+la segunda nota y salta de tercera en tercera.
+
+EL EXPLORADOR (pantalla principal, fuera de la ronda)
+-----------------------------------------------------
+Pestaña ACORDE
+- Elige fundamental, tipo e inversión. Verás notas, fórmula, cómo
+  pensarlo y en qué grados aparece.
+- Notas / Intervalos: cambia lo que se escribe en las teclas.
+- Escuchar: suena en bloque y después arpegiado.
+- +5ª: lleva el mismo acorde por el círculo de quintas.
+- Prueba libre: apaga las teclas para que toques de memoria.
+
+Pestaña TONALIDAD
+- Los siete acordes de una tonalidad mayor o menor, con su número romano
+  y su función: tónica (verde), subdominante (azul), dominante (rojo).
+- Toca un grado para verlo y oírlo. Elige tríadas o acordes con séptima.
+- Progresiones: tócala y pasa por el piano acorde a acorde.
+- En menor, el V es mayor (V7): toma la sensible de la menor armónica.
+
+ACORDES INCLUIDOS (19)
+----------------------
+Tríadas:      mayor, menor, disminuido, aumentado, sus2, sus4
+Cuatriadas:   maj7, 7, m7, m7b5, dim7, m(maj7), 6, m6
+Extensiones:  7sus4, add9, maj9, 9, m9
+
+PROGRESIONES (10)
+-----------------
+Mayor: ii–V–I, I–IV–V, I–V–vi–IV, I–vi–IV–V, vi–IV–I–V, I–vi–ii–V
+Menor: ii–V–i, i–iv–V, i–VII–VI–V (cadencia andaluza), i–VI–III–VII
+
+TIPOS DE EJERCICIO
+------------------
+- Tocar acorde: «Cm7». Tocas sus notas empezando por el bajo, en la
+  disposición que quieras. Con «Inversiones», el bajo cambia.
+- Grados: «El ii de Mi bemol mayor»: tocas el acorde.
+- Progresiones: «ii–V–I en Si bemol mayor»: un acorde tras otro.
+- Notas del acorde: «La 7.ª de Fm7»: tocas esa nota.
+- ¿Qué acorde es?: ves las teclas y eliges el nombre.
+- ¿Qué grado es?: «En Mi bemol mayor, ¿qué grado es Fm7?»
+- Oído: suena un acorde y eliges de qué tipo es (necesita sonido).
+Al tocar, un tropiezo se perdona; dos, no. Empieza siempre el acorde en
+la mitad izquierda del teclado para que quepa entero.
+
+AJUSTES
+-------
+- Notación americana (C D E) o europea (Do Re Mi).
+- Familias de acordes que entran en la ronda.
+- Tonalidades y fundamentales: teclas blancas o las 12.
+- Modo de las tonalidades: mayor, menor o ambos.
+- Acordes de la tonalidad: tríadas o con séptima.
+- Número de preguntas (5 a 40) y tiempo máximo (5 a 60 s, o sin límite).
+- Inversiones, nombres en las teclas, reintento inmediato y sonido.
+
+PUNTOS, MEMORIA Y DOMINIO
+-------------------------
+- Acierto: 100 puntos + hasta 100 por rapidez + 10 por acierto seguido.
+- La app recuerda los tipos de acorde, grados, progresiones y
+  tonalidades que fallas y los pregunta más a menudo.
+- «Tu dominio»: dos mapas, acordes por fundamental y grados por
+  tonalidad. Toca una casilla para verla en el piano.
+- Todo se guarda en el dispositivo. «Copia de seguridad» crea un código
+  para llevar el progreso a otro.
+
+PLAN RECOMENDADO
+----------------
+1. Tríadas en teclas blancas hasta ver el mapa en verde; luego «Las 12»
+   y después las cuatriadas.
+2. Grados en mayor con tríadas; después «Con séptima» y el modo menor.
+3. Progresiones al final: ii–V–I en las doce tonalidades.
+
+REGISTRO DE CAMBIOS
+-------------------
+v1.0 (11-11-2026)
+- Primera versión: explorador de acordes y de tonalidades, 19 acordes,
+  10 progresiones, 7 tipos de ejercicio, memoria de repaso, dos mapas de
+  dominio, progreso por días, copia de seguridad y pantalla completa.
+- Versión instalable: icono propio, modo app y uso sin conexión.
