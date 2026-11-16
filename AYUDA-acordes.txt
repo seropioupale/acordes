@@ -48,9 +48,22 @@ TIPOS DE EJERCICIO
 - Notas del acorde: «La 7.ª de Fm7»: tocas esa nota.
 - ¿Qué acorde es?: ves las teclas y eliges el nombre.
 - ¿Qué grado es?: «En Mi bemol mayor, ¿qué grado es Fm7?»
-- Oído: suena un acorde y eliges de qué tipo es (necesita sonido).
+- Tipo de acorde de oído: suena un acorde y eliges de qué tipo es.
+- Grado de oído: suena una cadencia que fija la tonalidad y después una
+  nota o un acorde; dices qué grado es. Es el ejercicio que más ayuda a
+  sacar canciones de oído.
+- Progresión de oído: suena la tónica y después una progresión; eliges
+  cuál es.
+Los tres ejercicios de oído necesitan sonido.
 Al tocar, un tropiezo se perdona; dos, no. Empieza siempre el acorde en
 la mitad izquierda del teclado para que quepa entero.
+
+EN HORIZONTAL
+-------------
+Gira el móvil durante la ronda: el teclado ocupa todo el ancho de abajo y
+las teclas se hacen el doble de grandes. La pregunta, las respuestas y la
+corrección quedan en la franja de arriba, sin tapar nunca el teclado.
+Se pueden pulsar varias teclas a la vez.
 
 AJUSTES
 -------
@@ -81,6 +94,12 @@ PLAN RECOMENDADO
 
 REGISTRO DE CAMBIOS
 -------------------
+v1.1 (16-11-2026)
+- Diseño horizontal: teclado a todo lo ancho, con la pregunta y las
+  respuestas arriba. La app ya no se bloquea en vertical.
+- Teclas que responden visualmente al pulsarlas.
+- Nuevos ejercicios: Grado de oído y Progresión de oído.
+
 v1.0 (11-11-2026)
 - Primera versión: explorador de acordes y de tonalidades, 19 acordes,
   10 progresiones, 7 tipos de ejercicio, memoria de repaso, dos mapas de
