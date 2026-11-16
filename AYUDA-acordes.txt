@@ -55,6 +55,21 @@ TIPOS DE EJERCICIO
 - Progresión de oído: suena la tónica y después una progresión; eliges
   cuál es.
 Los tres ejercicios de oído necesitan sonido.
+
+EJERCICIOS QUE SE DESBLOQUEAN
+-----------------------------
+Empiezas con tres tipos de ejercicio (Tocar acorde, Grados y ¿Qué acorde
+es?). Cada 15 aciertos se desbloquea uno nuevo, se activa solo y se
+anuncia al acabar la ronda. En los ajustes, «Desbloquear todos ahora» los
+abre todos. Después de los anteriores llegan:
+- Desde la fórmula: «1 b3 5 b7 sobre Re»: tocas el acorde.
+- Nota que falta: «De Fm a Fm7»: tocas la nota que hay que añadir.
+- Nota equivocada: el piano muestra un acorde con una nota mal; la tocas.
+- ¿Qué inversión es?: eliges en qué inversión está el acorde.
+- Notas comunes: «I y vi de Do mayor»: tocas las notas que comparten.
+- Dominantes secundarias: «V7/ii de Fa mayor»: tocas el dominante.
+- Sustituto tritonal: «Sustituto tritonal de G7»: tocas el dominante que
+  está a un tritono.
 Al tocar, un tropiezo se perdona; dos, no. Empieza siempre el acorde en
 la mitad izquierda del teclado para que quepa entero.
 
@@ -94,6 +109,10 @@ PLAN RECOMENDADO
 
 REGISTRO DE CAMBIOS
 -------------------
+v1.2 (16-11-2026)
+- Pregunta y corrección con letra más grande y más contraste.
+- 7 ejercicios nuevos (16 en total) y desbloqueo progresivo.
+
 v1.1 (16-11-2026)
 - Diseño horizontal: teclado a todo lo ancho, con la pregunta y las
   respuestas arriba. La app ya no se bloquea en vertical.

@@ -231,6 +231,11 @@ textarea#bkArea{width:100%;min-height:74px;background:var(--ink);color:var(--pap
 .hudline{display:none}
 .rot{display:none}
 #play .row-btns .ghost{color:var(--paper)}
+.multi button.locked{opacity:.42;cursor:default}
+/* Pregunta y corrección bien legibles a contrarreloj */
+.prompt .main{color:#fff}
+.prompt .sub{color:#ece7f7;font-size:17px;font-weight:500;line-height:1.35;margin-top:4px}
+.feedback .sub{color:#dcd6ea;font-size:15px;line-height:1.4}
 @media (orientation:portrait) and (max-width:600px){
   .piano-wrap{margin:0 -8px;padding:8px 4px 6px}
   body[data-view="play"] .rot{display:block;text-align:center;color:var(--muted);font-size:12.5px;margin:-4px 0 0}
@@ -248,12 +253,12 @@ textarea#bkArea{width:100%;min-height:74px;background:var(--ink);color:var(--pap
     grid-template-rows:auto auto 4px minmax(0,1fr);grid-template-areas:"pr rt" "fb rt" "tb tb" "pi pi"}
   body[data-view="play"] header.top,body[data-view="play"] .hud{display:none}
   body[data-view="play"] .prompt{grid-area:pr;min-height:0;text-align:left;justify-content:flex-start}
-  body[data-view="play"] .hudline{display:block;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.02em}
-  body[data-view="play"] .prompt .main{font-size:22px}
-  body[data-view="play"] .prompt .sub{font-size:13px;line-height:1.3}
+  body[data-view="play"] .hudline{display:block;font-size:12.5px;color:#d4cee6;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+  body[data-view="play"] .prompt .main{font-size:23px}
+  body[data-view="play"] .prompt .sub{font-size:15.5px;line-height:1.3;margin-top:2px}
   body[data-view="play"] .feedback{grid-area:fb;min-height:0;text-align:left;justify-content:flex-start}
-  body[data-view="play"] .feedback .main{font-size:16px}
-  body[data-view="play"] .feedback .sub{font-size:12.5px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  body[data-view="play"] .feedback .main{font-size:17px}
+  body[data-view="play"] .feedback .sub{font-size:14px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   body[data-view="play"] .tbar{grid-area:tb;height:4px}
   body[data-view="play"] .piano-wrap{grid-area:pi;min-height:0;display:flex;padding:6px;margin:0;border-radius:14px}
   body[data-view="play"] svg#piano{height:100%}
@@ -264,6 +269,8 @@ textarea#bkArea{width:100%;min-height:74px;background:var(--ink);color:var(--pap
   body[data-view="play"] #play .row-btns .ghost{padding:6px 10px;font-size:13px}
   body[data-view="play"] .ver{display:none}
 }
+header.top{flex-wrap:wrap}
+.top-r{flex-wrap:wrap;justify-content:flex-end}
 </style>
 </head>
 <body data-view="setup">
@@ -349,17 +356,9 @@ textarea#bkArea{width:100%;min-height:74px;background:var(--ink);color:var(--pap
         </div>
         <div class="field col">
           <span class="lab">Tipos de ejercicio</span>
-          <div class="multi" id="kinds">
-            <button type="button" data-val="play">Tocar acorde</button>
-            <button type="button" data-val="deg">Grados</button>
-            <button type="button" data-val="prog">Progresiones</button>
-            <button type="button" data-val="tone">Notas del acorde</button>
-            <button type="button" data-val="name">¿Qué acorde es?</button>
-            <button type="button" data-val="num">¿Qué grado es?</button>
-            <button type="button" data-val="ear">Tipo de acorde de oído</button>
-            <button type="button" data-val="eard">Grado de oído</button>
-            <button type="button" data-val="earp">Progresión de oído</button>
-          </div>
+          <div class="multi" id="kinds"></div>
+          <p class="hint" id="kindsHint"></p>
+          <button class="ghost" id="btnUnlockAll" type="button">Desbloquear todos ahora</button>
         </div>
         <div class="field">
           <span class="lab">Preguntas</span>
@@ -462,7 +461,21 @@ textarea#bkArea{width:100%;min-height:74px;background:var(--ink);color:var(--pap
           <li><b>Grado de oído.</b> Suena una cadencia que fija la tonalidad y después una nota o un acorde: dices qué grado es. Es el ejercicio que más ayuda a sacar canciones de oído.</li>
           <li><b>Progresión de oído.</b> Suena la tónica y después una progresión: eliges cuál es.</li>
         </ul>
+        <p>Y estos se desbloquean a medida que aciertas:</p>
+        <ul>
+          <li><b>Desde la fórmula.</b> «1 ♭3 5 ♭7 sobre Re»: tocas el acorde sin que te digan su nombre.</li>
+          <li><b>Nota que falta.</b> «De Fm a Fm7»: tocas la nota que hay que añadir.</li>
+          <li><b>Nota equivocada.</b> El piano muestra un acorde con una nota mal. La tocas.</li>
+          <li><b>¿Qué inversión es?</b> Ves el acorde y eliges en qué inversión está.</li>
+          <li><b>Notas comunes.</b> «I y vi de Do mayor»: tocas las notas que comparten. Es la base de la conducción de voces.</li>
+          <li><b>Dominantes secundarias.</b> «V7/ii de Fa mayor»: tocas el dominante que lleva a ese grado.</li>
+          <li><b>Sustituto tritonal.</b> «Sustituto tritonal de G7»: tocas el dominante que está a un tritono.</li>
+        </ul>
         <p>Al tocar, un tropiezo se perdona; dos, no. En menor, el V es mayor (V7): se toma de la menor armónica, que es como funciona en la práctica.</p>
+      </div>
+      <div class="card">
+        <h2>Ejercicios que se desbloquean</h2>
+        <p>Empiezas con tres tipos de ejercicio. Cada 15 aciertos se desbloquea uno nuevo, se activa solo y te lo anuncia al acabar la ronda. Si quieres verlos todos ya, en los ajustes tienes «Desbloquear todos ahora».</p>
       </div>
       <div class="card">
         <h2>En horizontal</h2>
@@ -497,6 +510,11 @@ textarea#bkArea{width:100%;min-height:74px;background:var(--ink);color:var(--pap
 
     <section class="view" id="results">
       <p class="verdict" id="verdict"></p>
+      <div class="card" id="rNewCard" style="display:none">
+        <h2>Nuevos ejercicios desbloqueados</h2>
+        <div class="chips" id="rNew"></div>
+        <p class="hint">Ya están activados en tus ajustes. En «Ayuda» se explica cómo funcionan.</p>
+      </div>
       <div class="stats">
         <div><span>Puntos</span><b id="rPts">0</b></div>
         <div><span>Aciertos</span><b id="rOk">0/0</b></div>
@@ -518,7 +536,7 @@ textarea#bkArea{width:100%;min-height:74px;background:var(--ink);color:var(--pap
       </div>
       <button class="cta" id="btnAgain">Otra ronda</button>
     </section>
-    <p class="ver">Versión 1.1</p>
+    <p class="ver">Versión 1.2</p>
   </div>
 </main>
 <script>
@@ -629,7 +647,13 @@ function degColor(off){return off===0?'#f2c14e':'oklch(0.8 0.13 '+((off*51+200)%
 
 /* ---------- Utilidades y estado ---------- */
 var SVGNS='http://www.w3.org/2000/svg';
-var KINDS=['play','deg','prog','tone','name','num','ear','eard','earp'];
+var KINDS=['play','deg','name','tone','num','prog','ear','eard','earp','form','add','fix','invn','common','sec','subv'];
+var ORDER=KINDS, OLD=['play','deg','name','tone','num','prog','ear','eard','earp'], PFX='ea';
+var KDEF={play:'Tocar acorde',deg:'Grados',name:'¿Qué acorde es?',tone:'Notas del acorde',num:'¿Qué grado es?',prog:'Progresiones',
+  ear:'Tipo de acorde de oído',eard:'Grado de oído',earp:'Progresión de oído',form:'Desde la fórmula',add:'Nota que falta',
+  fix:'Nota equivocada',invn:'¿Qué inversión es?',common:'Notas comunes',sec:'Dominantes secundarias',subv:'Sustituto tritonal'};
+var ADD=[['maj','maj7'],['maj','7'],['maj','6'],['maj','add9'],['min','m7'],['min','m6'],['min','mM7'],['dim','m7b5'],['dim','dim7'],['sus4','7sus4']];
+var INVL=['Fundamental','1.ª inversión','2.ª inversión','3.ª inversión'];
 var MCOL={none:'#3a3458',bad:'#ff6b6b',mid:'#f2c14e',good:'#5fd39a'};
 function $(id){return document.getElementById(id)}
 function load(k,def){try{var v=localStorage.getItem(k);return v?JSON.parse(v):def}catch(e){return def}}
@@ -671,6 +695,68 @@ function loadAll(){
   ex.free=false;
 }
 loadAll();
+/* ---------- Desbloqueo progresivo ---------- */
+var UNL_START=3, UNL_EVERY=15, unl, unlNext, newUnl=[];
+function totalOk(){ var t=0; for(var k in days) t+=(days[k]&&days[k].ok)||0; return t; }
+function saveUnl(){ save(PFX+'.unl.v1',unl); save(PFX+'.unlnext.v1',unlNext); }
+function loadUnl(){
+  unl=load(PFX+'.unl.v1',null); unlNext=load(PFX+'.unlnext.v1',null);
+  if(!Array.isArray(unl)){
+    var played=Object.keys(stats).some(function(k){return stats[k]&&stats[k].n>0});
+    unl=played?OLD.slice():ORDER.slice(0,UNL_START);
+  }
+  unl=unl.filter(function(k){return ORDER.indexOf(k)>-1});
+  ORDER.slice(0,UNL_START).forEach(function(k){ if(unl.indexOf(k)<0) unl.push(k); });
+  if(typeof unlNext!=='number') unlNext=totalOk()+UNL_EVERY;
+  saveUnl();
+}
+function lockedList(){ return ORDER.filter(function(k){return unl.indexOf(k)<0}); }
+function checkUnlock(){
+  var t=totalOk(), lk=lockedList();
+  while(lk.length&&t>=unlNext){
+    var k=lk.shift(); unl.push(k); newUnl.push(k);
+    if(settings.kinds.indexOf(k)<0) settings.kinds.push(k);
+    unlNext+=UNL_EVERY;
+  }
+  if(!lk.length&&unlNext<t) unlNext=t;
+  saveUnl(); save(PFX+'.settings.v1',settings);
+}
+function unlockAll(){
+  unl=ORDER.slice();
+  ORDER.forEach(function(k){ if(settings.kinds.indexOf(k)<0) settings.kinds.push(k); });
+  saveUnl();
+}
+function paintKinds(){
+  var box=$('kinds'); if(!box) return; box.innerHTML='';
+  ORDER.forEach(function(k){
+    var lock=unl.indexOf(k)<0, b=mk('button','',(lock?'🔒 ':'')+KDEF[k]);
+    b.type='button'; b.setAttribute('data-val',k);
+    if(lock){ b.disabled=true; b.classList.add('locked'); }
+    else b.setAttribute('aria-pressed',String(settings.kinds.indexOf(k)>-1));
+    box.appendChild(b);
+  });
+  var lk=lockedList(), left=Math.max(1,unlNext-totalOk());
+  $('kindsHint').textContent=lk.length
+    ?'Cada '+UNL_EVERY+' aciertos se desbloquea un ejercicio nuevo. El próximo, «'+KDEF[lk[0]]+'», llega en '+left+(left===1?' acierto.':' aciertos.')
+    :'Tienes todos los ejercicios desbloqueados.';
+  $('btnUnlockAll').style.display=lk.length?'':'none';
+}
+function paintNew(){
+  var card=$('rNewCard'), box=$('rNew');
+  if(!newUnl.length){ card.style.display='none'; return; }
+  card.style.display=''; box.innerHTML='';
+  newUnl.forEach(function(k){ box.appendChild(mk('span','chip',KDEF[k])); });
+  newUnl=[];
+}
+function wireUnlock(){
+  var armed=0, b=$('btnUnlockAll');
+  b.addEventListener('click',function(){
+    if(armed){ clearTimeout(armed); armed=0; b.textContent='Desbloquear todos ahora'; unlockAll(); syncSettings(); return; }
+    b.textContent='Toca otra vez para confirmar';
+    armed=setTimeout(function(){armed=0; b.textContent='Desbloquear todos ahora'},3000);
+  });
+}
+loadUnl();
 
 function st(id){ if(!stats[id]) stats[id]={n:0,ok:0,score:0}; return stats[id]; }
 function upd(id,good){
@@ -694,6 +780,7 @@ function idName(id){
   if(p[0]==='g'){ var d=DIA[p[1]]&&DIA[p[1]][+p[2]]; return d?'Grado '+(settings.dia==='3'?d.r3:d.r4)+' ('+modeName(p[1])+')':id; }
   if(p[0]==='p'){ var pr=progByK(p[1]); return pr?progName(pr)+' ('+modeName(pr.mode)+')':id; }
   if(p[0]==='eg'){ var e=SC[p[1]]&&SC[p[1]][+p[2]]; return e?'Grado '+degStr(e.d)+' de oído ('+modeName(p[1])+')':id; }
+  if(p[0]==='sd'){ var dd=DIA.maj[+p[1]]; return dd?'V7/'+dd.r3+' (dominante secundaria)':id; }
   if(p[0]==='ep'){ var pe=progByK(p[1]); return pe?progName(pe)+' de oído ('+modeName(pe.mode)+')':id; }
   return id;
 }
@@ -1023,11 +1110,10 @@ function syncSettings(){
       b.setAttribute('aria-pressed',String(b.getAttribute('data-val')===String(settings[key])));
     });
   });
-  ['kinds','groups'].forEach(function(id){
-    document.querySelectorAll('#'+id+' button').forEach(function(b){
-      b.setAttribute('aria-pressed',String(settings[id].indexOf(b.getAttribute('data-val'))>-1));
-    });
+  document.querySelectorAll('#groups button').forEach(function(b){
+    b.setAttribute('aria-pressed',String(settings.groups.indexOf(b.getAttribute('data-val'))>-1));
   });
+  paintKinds();
   $('qOut').textContent=settings.num;
   $('tOut').textContent=settings.time?settings.time+' s':'Sin límite';
   $('invToggle').checked=settings.inv;
@@ -1038,7 +1124,7 @@ function syncSettings(){
   save('ea.settings.v1',settings);
 }
 function weakList(){
-  return Object.keys(stats).filter(function(id){return /^(q|r|k|g|p|eg|ep):/.test(id)&&stats[id].score>=2})
+  return Object.keys(stats).filter(function(id){return /^(q|r|k|g|p|eg|ep|sd):/.test(id)&&stats[id].score>=2})
     .sort(function(a,b){return stats[b].score-stats[a].score});
 }
 function paintWeak(boxId,hintId){
@@ -1101,14 +1187,14 @@ function pickW(items,idOf){
   for(var i=0;i<items.length;i++){ r-=ws[i]; if(r<=0) return items[i]; }
   return items[items.length-1];
 }
-function isTap(k){return k==='play'||k==='deg'||k==='prog'}
+function isTap(k){return k==='play'||k==='deg'||k==='prog'||k==='form'||k==='sec'||k==='subv'}
 function isEar(k){return k==='ear'||k==='eard'||k==='earp'}
-function isChoice(k){return k==='name'||k==='num'||isEar(k)}
-function isKeyKind(k){return k==='deg'||k==='prog'||k==='num'||k==='eard'||k==='earp'}
+function isChoice(k){return k==='name'||k==='num'||k==='invn'||isEar(k)}
+function isKeyKind(k){return k==='deg'||k==='prog'||k==='num'||k==='eard'||k==='earp'||k==='common'||k==='sec'}
 function sig(q){return [q.kind,q.ck,q.pc,q.inv,q.mode,q.kpc,q.di,q.pk,q.ti].join('|')}
 function newQuestion(){
   var can=settings.sound&&actx;
-  var kinds=settings.kinds.filter(function(k){return !isEar(k)||can});
+  var kinds=settings.kinds.filter(function(k){return unl.indexOf(k)>-1&&(!isEar(k)||can)});
   if(!kinds.length) kinds=['play'];
   var roots=settings.roots==='nat'?[0,2,4,5,7,9,11]:[0,1,2,3,4,5,6,7,8,9,10,11];
   var modes=settings.kmode==='both'?['maj','min']:[settings.kmode];
@@ -1117,9 +1203,13 @@ function newQuestion(){
     var kind=kinds[rnd(kinds.length)];
     q={kind:kind};
     if(isKeyKind(kind)){
-      q.mode=modes[rnd(modes.length)];
+      q.mode=kind==='sec'?'maj':modes[rnd(modes.length)];
       q.kpc=pickW(roots,function(r){return 'k:'+q.mode+':'+r});
-      if(kind==='prog'||kind==='earp'){
+      if(kind==='sec'){
+        q.di=pickW([1,2,3,4,5],function(i){return 'sd:'+i});
+      }else if(kind==='common'){
+        q.di=rnd(7); q.d2=(q.di+[2,5,3,4][rnd(4)])%7;
+      }else if(kind==='prog'||kind==='earp'){
         var pl=PROGS.filter(function(p){return p.mode===q.mode});
         q.pk=pickW(pl,function(p){return (kind==='earp'?'ep:':'p:')+p.k}).k;
         if(kind==='earp'){
@@ -1137,10 +1227,28 @@ function newQuestion(){
         }
       }
     }else{
-      var p=pool(), ch=pickW(p,function(c){return 'q:'+c.k});
+      var p=pool(), ch;
+      if(kind==='add'){
+        var prs=ADD.filter(function(x){return settings.groups.indexOf(CH[x[1]].g)>-1});
+        if(!prs.length) prs=ADD;
+        var pr=pickW(prs,function(x){return 'q:'+x[1]}); ch=CH[pr[1]]; q.base=pr[0];
+      }else{
+        if(kind==='invn'||kind==='fix'){ p=p.filter(function(c){return c.g!=='ext'}); if(!p.length) p=CHORDS.filter(function(c){return c.g==='tri'}); }
+        if(kind==='subv') p=[CH['7']];
+        ch=pickW(p,function(c){return 'q:'+c.k});
+      }
       q.ck=ch.k; q.pc=pickW(roots,function(r){return 'r:'+r});
-      if(kind==='play') q.inv=(settings.inv&&ch.g!=='ext')?rnd(ch.deg.length):0;
+      if(kind==='subv'){ q.orig=q.pc; q.pc=(q.pc+6)%12; }
+      if(kind==='play'||kind==='form') q.inv=(kind==='play'&&settings.inv&&ch.g!=='ext')?rnd(ch.deg.length):0;
       else if(kind==='tone') q.ti=1+rnd(ch.deg.length-1);
+      else if(kind==='invn'){ q.inv=rnd(ch.deg.length); q.opts=ch.deg.map(function(_,x){return x}); q.answer=q.inv; }
+      else if(kind==='fix'){
+        q.fi=1+rnd(ch.deg.length-1);
+        var semis=ch.deg.map(function(d){return d.semi%12}), sh=ch.deg[q.fi].semi;
+        var cands=[sh-1,sh+1].filter(function(v){return v>0&&semis.indexOf(((v%12)+12)%12)<0});
+        q.fv=cands.length?cands[rnd(cands.length)]-sh:1;
+      }
+      else if(kind==='add'||kind==='subv'){}
       else{
         var o=shuffle(p.filter(function(c){return c.k!==ch.k}));
         if(o.length<3) o=shuffle(CHORDS.filter(function(c){return c.k!==ch.k}));
@@ -1159,7 +1267,7 @@ function buildControls(q){
   if(q.opts.length>4) box.classList.add('seven');
   q.opts.forEach(function(o){
     var rom=function(){return settings.dia==='3'?DIA[q.mode][o].r3:DIA[q.mode][o].r4};
-    var txt=q.kind==='num'?rom():q.kind==='eard'?(q.form==='note'?degStr(SC[q.mode][o].d):rom()):q.kind==='earp'?progName(progByK(o)):label(chordSp(q.pc,CH[o]),CH[o]);
+    var txt=q.kind==='invn'?INVL[o]:q.kind==='num'?rom():q.kind==='eard'?(q.form==='note'?degStr(SC[q.mode][o].d):rom()):q.kind==='earp'?progName(progByK(o)):label(chordSp(q.pc,CH[o]),CH[o]);
     var b=btn('',txt,function(){ choose(o); }); b.setAttribute('data-ans',String(o));
     box.appendChild(b);
   });
@@ -1197,6 +1305,43 @@ function ask(){
     ch=CH[q.ck]; sp=chordSp(q.pc,ch);
     q.steps=[{sp:sp,ch:ch,bass:voicing(sp,q.inv)[0].n.pc}]; q.si=0; q.err=0; beginStep();
     prompt(label(sp,ch)+(q.inv?' · '+INV[q.inv]:''),again+'Toca sus notas empezando por el bajo.');
+    mult=1.5;
+  }else if(q.kind==='form'){
+    ch=CH[q.ck]; sp=chordSp(q.pc,ch);
+    q.steps=[{sp:sp,ch:ch,bass:sp[0].pc}]; q.si=0; q.err=0; beginStep();
+    prompt(ch.deg.map(function(x){return degStr(x.d)}).join(' ')+' sobre '+nm(sp[0]),again+'Toca el acorde desde su fundamental.');
+    mult=1.5;
+  }else if(q.kind==='subv'){
+    ch=CH['7']; sp=chordSp(q.pc,ch);
+    q.steps=[{sp:sp,ch:ch,bass:sp[0].pc}]; q.si=0; q.err=0; beginStep();
+    prompt('Sustituto tritonal de '+label(chordSp(q.orig,ch),ch),again+'Toca el acorde desde su fundamental.');
+    mult=1.5;
+  }else if(q.kind==='sec'){
+    sp=secSp(q); ch=CH['7'];
+    q.steps=[{sp:sp,ch:ch,bass:sp[0].pc}]; q.si=0; q.err=0; beginStep();
+    prompt('V7/'+DIA.maj[q.di].r3+' de '+keyName(q.kpc,'maj'),again+'Dominante secundaria: toca el acorde desde su fundamental.');
+    mult=1.5;
+  }else if(q.kind==='add'){
+    var base=CH[q.base], bsp=chordSp(q.pc,base); ch=CH[q.ck]; sp=chordSp(q.pc,ch);
+    q.ans=sp.filter(function(n){return !bsp.some(function(b){return b.pc===n.pc})})[0].pc;
+    showChord(bsp,0,'');
+    prompt('De '+label(bsp,base)+' a '+label(sp,ch),again+'Toca la nota que hay que añadir.');
+  }else if(q.kind==='fix'){
+    ch=CH[q.ck]; sp=chordSp(q.pc,ch);
+    var vk=voicing(sp,0).map(function(x){return x.key});
+    q.wk=vk[q.fi]+q.fv;
+    vk.forEach(function(k,x){ light(x===q.fi?q.wk:k,'#b9b2d6',''); });
+    K[vk[0]].g.classList.add('root');
+    prompt(label(sp,ch),again+'Una nota está equivocada. Tócala.');
+  }else if(q.kind==='invn'){
+    ch=CH[q.ck]; sp=chordSp(q.pc,ch);
+    showChord(sp,q.inv,'');
+    prompt(label(sp,ch),again+'¿En qué inversión está? El punto marca la fundamental.');
+  }else if(q.kind==='common'){
+    var c1=dia(q.kpc,q.mode,q.di), c2=dia(q.kpc,q.mode,q.d2);
+    q.need=c1.sp.filter(function(n){return c2.sp.some(function(m){return m.pc===n.pc})}).map(function(n){return n.pc});
+    q.found={}; q.err=0;
+    prompt(c1.roman+' y '+c2.roman+' de '+keyName(q.kpc,q.mode),again+'Toca las notas que comparten ('+q.need.length+').');
     mult=1.5;
   }else if(q.kind==='deg'){
     d=dia(q.kpc,q.mode,q.di);
@@ -1249,6 +1394,29 @@ function tick(){
   }else{ $('hudT').textContent=Math.floor(e); hudLine(Math.floor(e)); }
   raf=requestAnimationFrame(tick);
 }
+function secSp(q){
+  var t=dia(q.kpc,'maj',q.di,true), l=(t.sp[0].l+4)%7, pc=(t.pc+7)%12, a=((pc-LETPC[l])%12+12)%12;
+  if(a>6) a-=12;
+  return spellFrom(l,a,CH['7'].deg);
+}
+function tapSet(i){
+  var q=G.q, pc=K[i].pc;
+  if(q.need.indexOf(pc)>-1){
+    if(q.found[pc]) return;
+    q.found[pc]=1;
+    var c1=dia(q.kpc,q.mode,q.di), n=c1.sp.filter(function(x){return x.pc===pc})[0];
+    light(i,'#5fd39a',nm(n));
+    if(Object.keys(q.found).length>=q.need.length) resolve(true,{});
+  }else{
+    q.err++; flag(i,'miss',400);
+    if(q.err>=2) resolve(false,{key:i});
+  }
+}
+function cloneQ(q){
+  var c={};
+  ['kind','ck','pc','inv','ti','mode','kpc','di','d2','pk','form','tk','opts','answer','base','fi','fv','orig'].forEach(function(k){ if(q[k]!==undefined) c[k]=q[k]; });
+  return c;
+}
 function tapChord(i){
   var q=G.q; if(q.wait) return;
   var s=q.steps[q.si], pc=K[i].pc, n=null;
@@ -1286,6 +1454,9 @@ function keyTap(i){
   if(isChoice(q.kind)) return;
   note(i,0,0.6);
   if(isTap(q.kind)) tapChord(i);
+  else if(q.kind==='common') tapSet(i);
+  else if(q.kind==='fix') resolve(i===q.wk,{key:i});
+  else if(q.kind==='add') resolve(K[i].pc===q.ans,{key:i});
   else resolve(K[i].pc===chordSp(q.pc,CH[q.ck])[q.ti].pc,{key:i});
 }
 function choose(ans){
@@ -1304,7 +1475,17 @@ function resolve(good,o){
   var q=G.q, e=(performance.now()-G.t0)/1000, ids=[], sub, keys, ch, sp, d, kn;
   if(isKeyKind(q.kind)){
     kn=keyName(q.kpc,q.mode); ids.push('k:'+q.mode+':'+q.kpc);
-    if(q.kind==='prog'||q.kind==='earp'){
+    if(q.kind==='sec'){
+      var tg=dia(q.kpc,'maj',q.di,true), ssp=secSp(q);
+      ids.push('sd:'+q.di);
+      keys=showChord(ssp,0,'n');
+      sub=(good?'':'Era ')+'V7/'+tg.roman+' de '+kn+' = '+label(ssp,CH['7'])+': '+ssp.map(nm).join(' ')+'. Resuelve en '+label(tg.sp,tg.ch)+', el '+tg.roman+'.';
+    }else if(q.kind==='common'){
+      var c1=dia(q.kpc,q.mode,q.di), c2=dia(q.kpc,q.mode,q.d2);
+      keys=showChord(c1.sp,0,'n');
+      K.forEach(function(k){ if(keys.indexOf(k.i)>-1&&q.need.indexOf(k.pc)>-1) k.g.classList.add('good'); });
+      sub=c1.roman+' = '+label(c1.sp,c1.ch)+' ('+c1.sp.map(nm).join(' ')+') y '+c2.roman+' = '+label(c2.sp,c2.ch)+' ('+c2.sp.map(nm).join(' ')+'). Comparten '+c1.sp.filter(function(n){return q.need.indexOf(n.pc)>-1}).map(nm).join(' y ')+'.';
+    }else if(q.kind==='prog'||q.kind==='earp'){
       var p=progByK(q.pk);
       ids.push((q.kind==='earp'?'ep:':'p:')+q.pk);
       sub=progName(p)+' en '+kn+': '+p.d.map(function(di){var x=dia(q.kpc,q.mode,di);return label(x.sp,x.ch)}).join(' – ')+'. '+p.note;
@@ -1333,10 +1514,22 @@ function resolve(good,o){
     if(q.kind==='tone'){
       sub='La '+ordn(sp[q.ti])+' de '+label(sp,ch)+' es '+nm(sp[q.ti])+'. Notas: '+notes+'.';
       if(!good) K.forEach(function(k){ if(k.pc===sp[q.ti].pc&&keys.indexOf(k.i)>-1) k.g.classList.add('good'); });
+    }else if(q.kind==='subv'){
+      sub='El sustituto tritonal de '+label(chordSp(q.orig,ch),ch)+' es '+label(sp,ch)+': '+notes+'. Está a un tritono y comparte con él la 3.ª y la 7.ª, intercambiadas.';
+    }else if(q.kind==='add'){
+      var ab=chordSp(q.pc,CH[q.base]), an=sp.filter(function(n){return n.pc===q.ans})[0];
+      sub='Para pasar de '+label(ab,CH[q.base])+' a '+label(sp,ch)+' se añade '+nm(an)+' ('+degStr(an.d)+'). '+ch.how;
+      if(!good) K.forEach(function(k){ if(k.pc===q.ans&&keys.indexOf(k.i)>-1) k.g.classList.add('good'); });
+    }else if(q.kind==='fix'){
+      sub=label(sp,ch)+': '+notes+'. La nota equivocada era la tecla marcada con ✗.';
+      if(K[q.wk]){ K[q.wk].g.classList.add('miss'); setLabel(K[q.wk],'✗'); }
+    }else if(q.kind==='invn'){
+      sub=label(sp,ch)+' en '+INV[q.inv]+': '+notes+'. El bajo es '+nm(voicing(sp,q.inv)[0].n)+'.';
     }else sub=label(sp,ch)+(q.inv?' en '+INV[q.inv]:'')+': '+notes+'. '+ch.how;
   }
   ids.forEach(function(id){ upd(id,good); });
-  if(o.key!==undefined&&keys.indexOf(o.key)<0) K[o.key].g.classList.add(good?'good':'miss');
+  if(q.kind==='fix'){}
+  else if(o.key!==undefined&&keys.indexOf(o.key)<0) K[o.key].g.classList.add(good?'good':'miss');
   else if(o.key!==undefined&&good) K[o.key].g.classList.add('good');
   var dd=today(); dd.q++;
   if(good){
@@ -1356,7 +1549,7 @@ function resolve(good,o){
   else chordSound(o.keys&&good?o.keys:keys,!good,0.05);
   G.i++;
   if(!good&&settings.retry){
-    G.queue.push({at:G.i+1+rnd(2),q:{kind:q.kind,ck:q.ck,pc:q.pc,inv:q.inv,ti:q.ti,mode:q.mode,kpc:q.kpc,di:q.di,pk:q.pk,form:q.form,tk:q.tk,opts:q.opts,answer:q.answer}});
+    G.queue.push({at:G.i+1+rnd(2),q:cloneQ(q)});
   }
   save('ea.stats.v1',stats); save('ea.days.v1',days);
   hud(); $('hudQ').textContent=G.i+'/'+G.total;
@@ -1373,7 +1566,7 @@ function finish(){
   var g=G; G=null; stopSeq(); cancelAnimationFrame(raf);
   if(g.pts>best){best=g.pts;save('ea.best.v1',best)}
   today().rounds++; save('ea.days.v1',days);
-  setView('results'); refreshAll();
+  checkUnlock(); setView('results'); refreshAll(); paintNew();
   var asked=g.i, pct=g.ok/asked;
   $('verdict').textContent=pct===1?'Ronda redonda. Baja el tiempo, activa las inversiones o añade una familia.'
     :pct>=0.8?'Muy bien. Quedan un par de acordes por asentar.'
@@ -1397,7 +1590,7 @@ function quit(){
 
 /* ---------- Copia de seguridad ---------- */
 function backupCode(){
-  var json=JSON.stringify({v:1,stats:stats,days:days,best:best,settings:settings});
+  var json=JSON.stringify({v:1,stats:stats,days:days,best:best,settings:settings,unl:unl,unlNext:unlNext});
   return 'EA1:'+btoa(unescape(encodeURIComponent(json)));
 }
 function restore(code){
@@ -1407,7 +1600,9 @@ function restore(code){
   if(!o||typeof o.stats!=='object'||typeof o.days!=='object') throw new Error('contenido');
   save('ea.stats.v1',o.stats); save('ea.days.v1',o.days); save('ea.best.v1',+o.best||0);
   if(o.settings&&typeof o.settings==='object') save('ea.settings.v1',o.settings);
-  cache={}; loadAll();
+  if(Array.isArray(o.unl)) save('ea.unl.v1',o.unl);
+  if(typeof o.unlNext==='number') save('ea.unlnext.v1',o.unlNext);
+  cache={}; loadAll(); loadUnl();
 }
 
 /* ---------- Eventos ---------- */
@@ -1491,7 +1686,7 @@ function wireFullscreen(){
   document.addEventListener('fullscreenchange',paint);
   document.addEventListener('webkitfullscreenchange',paint);
 }
-buildPiano(); wire(); wireFullscreen(); refreshAll();
+buildPiano(); wire(); wireUnlock(); wireFullscreen(); refreshAll();
 function refit(){ fitPiano(); setTimeout(fitPiano,250); }
 window.addEventListener('resize',refit);
 window.addEventListener('orientationchange',refit);
